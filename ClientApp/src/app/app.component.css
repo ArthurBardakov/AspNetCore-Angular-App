@@ -1,0 +1,38 @@
+#body_container {
+	height: 72%;
+	background: url(../assets/images/medicineWithLove.jpg) no-repeat center/cover;
+}
+
+footer {
+	display: flex;
+    flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #9ccbea;
+	padding: 20px 0px;
+	height: 3.7rem;
+}
+
+.email {
+	margin-bottom: 5px;
+}
+
+#socialnet > a {
+	padding: 0px 20px;
+	cursor: pointer;
+}
+
+svg {
+	color: brown;
+	transition: .7s;
+}
+
+svg:hover {
+	color: #fff;
+	transition: .7s;
+}
+
+.hide {
+	opacity: 0;
+	transition: opacity 1s;
+}

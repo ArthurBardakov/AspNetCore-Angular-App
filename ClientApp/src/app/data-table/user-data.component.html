@@ -1,0 +1,80 @@
+<div id="filter">
+    <mat-form-field id="filter_option">
+        <mat-label>Filter by</mat-label>
+        <mat-select [(value)]="FilterOption" [disabled]="!(dataSrc.UsersLoaded | async)">
+            <mat-option *ngFor="let option of FilterOptions" [value]="option">
+                {{option.Value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field id="filter_field">
+        <input matInput (keyup)="ApplyFilter($event.target.value)"
+               [disabled]="!(dataSrc.UsersLoaded | async)" placeholder="Type here">
+    </mat-form-field>
+</div>
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="Users" matSort *ngIf="(dataSrc.UsersLoaded | async); else loadingSpinner">
+        <ng-container *ngFor="let p of dataSrc.RelatedUserProps" matColumnDef="{{p}}">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{p === 'userName' ? 'Email' : (p | normalize)}}
+            </th>
+            <ng-container *ngIf="p !== 'registryDate'; else dateTemplate">
+                <td mat-cell *matCellDef="let user">{{user[p]}}</td>
+            </ng-container>
+            <ng-template #dateTemplate>
+                <td mat-cell *matCellDef="let user">
+                    {{datepipe.transform(user[p], 'dd-MM-yyyy')}}
+                </td>
+            </ng-template>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let user">
+                <div class="actionBtns">
+                    <button mat-raised-button class="addBtn" type="button" name="addUser"
+                            [ngClass]="{invisible: RelatedTable}" [disabled]="BtnsDisabled || user.related"
+                            (click)="AddOnClick(user)">
+                        Add
+                    </button>
+        
+                    <button mat-raised-button type="button" name="editUser" color="primary"
+                            [ngClass]="{invisible: !RelatedTable || dataSrc.UserRole === Roles.patient}"
+                            [disabled]="BtnsDisabled"
+                            (click)="OpenEditDialog(user)">
+                        Edit
+                    </button>
+        
+                    <button mat-raised-button class="deleteBtn" type="button" name="deleteUser"
+                            [ngClass]="{invisible: !RelatedTable}" [disabled]="BtnsDisabled"
+                            (click)="DeleteOnClick(user)">
+                        Delete
+                    </button>
+                </div>
+            </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="Headers; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: Headers;"></tr>
+    </table>
+    
+    <ng-template #loadingSpinner>
+        <div id="spinner_container">
+            <mat-progress-spinner [color]="'primary'" [mode]="'indeterminate'">
+            </mat-progress-spinner>
+        </div>
+    </ng-template>
+    <ng-container *ngIf="(dataSrc.UsersLoaded | async)">
+        <div id="no_content" *ngIf="Users.data.length === 0">
+            <p>No data here yet!</p>
+        </div>
+        <div id="no_filtered_data" #filteredData *ngIf="NoFilteredData">
+            <p>No data found!</p>
+        </div>
+    </ng-container>
+    <mat-paginator class="mat-paginator-sticky"
+                   [length]="TotalLength" [pageSizeOptions]="[5, 10]"
+                   (page)="UploadUsersIfNecessary($event)"  showFirstLastButtons>
+    </mat-paginator>
+</div>

@@ -1,0 +1,101 @@
+<div class="modal_header">
+  <span>Register</span>
+</div>
+<form #RegForm="ngForm" userExists="false" novalidate 
+      (ngSubmit)="accountSrc.OnRegisterSubmit.emit(RegForm.value)">
+  <div mat-dialog-content>
+    <div class="googlePlus">
+      <button type="button" name="provider" value="" #GoogleBtn
+              [disabled]="RegForm.disabled"
+              [ngClass]="{'googleBtn': RegForm.enabled, 'googleBtnDisabled': RegForm.disabled}"
+              (click)="accountSrc.GoogleSignIn.emit()">
+          <i class="fab fa-google-plus fa-5x"></i>
+      </button>
+    </div>
+    <section class="form_container">
+      <ng-container *ngIf="RegForm.invalid && RegForm?.errors?.server">
+        <mat-error *ngFor="let err of (RegForm?.errors.server)">{{err}}</mat-error>
+      </ng-container>
+
+      <mat-form-field>
+          <input matInput placeholder="Last name" name="lastName" ngModel #lastName="ngModel" 
+                required validateEmpty minlength="2" maxlength="25">
+          <mat-label>Last name</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="lastName.invalid && lastName.dirty">
+          <mat-error *ngIf="lastName?.errors.required">Last name field is required.</mat-error>
+          <mat-error *ngIf="lastName?.errors.minlength">Last name must be at least 2 characters long.</mat-error>
+          <mat-error *ngIf="lastName?.errors.validateEmpty"> Last name cannot have white spaces.</mat-error>
+          <ng-container *ngIf="lastName?.errors.server">
+              <mat-error *ngFor="let err of (lastName?.errors.server)">{{err}}</mat-error>
+          </ng-container>
+      </ng-container>
+
+      <mat-form-field>
+          <input matInput placeholder="First name" name="firstName" ngModel #firstName="ngModel" 
+                required validateEmpty minlength="2" maxlength="25">
+          <mat-label>First name</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="firstName.invalid && firstName.dirty">
+          <mat-error *ngIf="firstName?.errors.required">First name field is required.</mat-error>
+          <mat-error *ngIf="firstName?.errors.minlength">First name must be at least 2 characters long.</mat-error>
+          <mat-error *ngIf="firstName?.errors.validateEmpty">First name cannot have white spaces.</mat-error>
+          <ng-container *ngIf="firstName?.errors.server">
+              <mat-error *ngFor="let err of (firstName?.errors.server)">{{err}}</mat-error>
+          </ng-container>
+      </ng-container>
+
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" name="email" ngModel #email="ngModel" required email>
+        <mat-label>Email</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="email.invalid && email.dirty">
+        <mat-error *ngIf="email?.errors.required">Email is required.</mat-error>
+        <mat-error *ngIf="email?.errors.email">Incorrect email input.</mat-error>
+        <mat-error *ngIf="email?.errors.userExists">{{email?.errors.userExists}}</mat-error>
+        <ng-container *ngIf="email?.errors.server">
+          <mat-error *ngFor="let err of (email?.errors.server)">{{err}}</mat-error>
+        </ng-container>
+      </ng-container>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" name="password" 
+              ngModel #password="ngModel" required minlength="6" maxlength="25">
+        <mat-label>Password</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="password.invalid && password.dirty">
+          <mat-error *ngIf="password?.errors.required">Password is required.</mat-error>
+          <mat-error *ngIf="password?.errors.minlength">Password must be between 6 and 25 characters.</mat-error>
+          <ng-container *ngIf="password?.errors.server">
+            <mat-error *ngFor="let err of (password?.errors.server)">{{err}}</mat-error>
+          </ng-container>
+      </ng-container>
+
+      <mat-form-field>
+          <input matInput placeholder="Password confirmation" type="password" name="confirmPassword" 
+                ngModel #confirmPassword="ngModel" validateEqual="password" maxlength="25">
+          <mat-label>Password confirmation</mat-label>
+          <ng-container *ngIf="confirmPassword.invalid && !confirmPassword.pristine">
+              <mat-error *ngIf="confirmPassword?.errors.validateEqual === false">Password confirmation doesn't match password.</mat-error>
+              <ng-container *ngIf="confirmPassword?.errors.server">
+                  <mat-error *ngFor="let err of (confirmPassword?.errors.server)">{{err}}</mat-error>
+              </ng-container>
+          </ng-container>
+      </mat-form-field>
+
+      <mat-checkbox name="role" color="primary" #role [value]="false"
+        [(ngModel)]="role.value">Register as a doctor</mat-checkbox>
+    </section>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="RegForm.disabled" (click)="Close('close')">
+      Close
+    </button>
+    <button mat-raised-button type="submit" color="primary"
+            [disabled]="RegForm.invalid || RegForm.disabled">
+      Register
+    </button>
+  </div>
+</form>
+<ngx-spinner name="account_spinner" bdColor="none" size="large" color="#4db951" type="ball-scale-multiple"></ngx-spinner>

@@ -1,0 +1,15 @@
+<div class="modal_header">
+    <span>You don't have an account, choose the register type</span>
+</div>
+<div mat-dialog-actions align="center">
+    <button mat-raised-button type="button" color="primary" (click)="OnRoleChosen(Roles.patient)">
+        Patient
+    </button>
+    <button mat-raised-button type="button" color="primary" (click)="OnRoleChosen(Roles.doctor)">
+        Doctor
+    </button>
+    <div class="underline"></div>
+    <button mat-button type="button" (click)="Close()">
+        Close
+    </button>
+</div>

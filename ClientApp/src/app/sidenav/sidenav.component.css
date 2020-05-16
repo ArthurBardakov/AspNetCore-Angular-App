@@ -1,0 +1,34 @@
+#sideBar {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#profileTabs {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 20%;
+    max-width: 160px;
+    margin: 2rem 0 0 2rem;
+}
+
+#profileTabs > a {
+    color: #fffcf8;
+    text-decoration: none;
+    transition: .8s;
+    border-radius: .25rem;
+    padding: .5rem 1rem;
+    max-width: 160px;
+}
+
+#profile_content {
+    width: 80%;
+    height: 100%;
+    margin-top: 1.4rem;
+}
+
+.profileLinkActive {
+    background-color: rgba(81,159,211,.829);
+}

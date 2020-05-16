@@ -1,0 +1,91 @@
+<form id="userProfile" #ProfileForm="ngForm" (keyup)="OnChange()" novalidate (ngSubmit)="OnSaveChanges()">
+
+    <ng-container *ngIf="ProfileForm.invalid && ProfileForm?.errors?.server">
+        <mat-error *ngFor="let err of (ProfileForm?.errors.server)">{{err}}</mat-error>
+    </ng-container>
+
+    <div class="form_group">
+        <input class="form_field" type="text" name="lastName" [(ngModel)]="User.lastName" #lastName="ngModel" 
+               required validateEmpty minlength="2" maxlength="25" placeholder="Last name" />
+
+        <ng-container *ngIf="lastName.invalid && lastName.dirty">
+            <mat-error *ngIf="lastName?.errors.required">Last name field is required.</mat-error>
+            <mat-error *ngIf="lastName?.errors.minlength">Last name length must be between 2 and 25 symbols.</mat-error>
+            <mat-error *ngIf="lastName?.errors.validateEmpty"> Last name cannot have white spaces.</mat-error>
+            <ng-container *ngIf="lastName?.errors.server">
+                <mat-error *ngFor="let err of (lastName?.errors.server)">{{err}}</mat-error>
+            </ng-container>
+        </ng-container>
+    </div>
+    
+    <div class="form_group">
+        <input class="form_field" name="firstName" [(ngModel)]="User.firstName" #firstName="ngModel" 
+               required validateEmpty minlength="2" maxlength="20" placeholder="First name" />
+    
+        <ng-container *ngIf="firstName.invalid && firstName.dirty">
+            <mat-error *ngIf="firstName?.errors.required">First name field is required.</mat-error>
+            <mat-error *ngIf="firstName?.errors.minlength">First name length must be between 2 and 20 symbols.</mat-error>
+            <mat-error *ngIf="firstName?.errors.validateEmpty"> First name cannot have white spaces.</mat-error>
+            <ng-container *ngIf="firstName?.errors.server">
+                <mat-error *ngFor="let err of (firstName?.errors.server)">{{err}}</mat-error>
+            </ng-container>
+        </ng-container>
+    </div>
+    
+    <div class="form_group">
+        <input class="form_field" disabled="disabled" name="userName" 
+                [ngModel]="User.userName" #userName="ngModel" placeholder="Email" />
+    </div>
+    
+    <div class="form_group">
+        <input class="form_field" name="age" type="number" [(ngModel)]="User.age" #age="ngModel"
+               min="18" max="100" placeholder="Age" />
+
+        <ng-container *ngIf="age.invalid && age.dirty">
+            <mat-error *ngIf="age?.errors.min">You have to be at least 18 years old.</mat-error>
+            <mat-error *ngIf="age?.errors.max">Age must be between 18 and 100.</mat-error>
+            <ng-container *ngIf="age?.errors.server">
+                <mat-error *ngFor="let err of (age?.errors.server)">{{err}}</mat-error>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.doctor}">
+        <input class="form_field" disabled="disabled" name="registryDate" 
+               [ngModel]="datePipe.transform(User.registryDate, 'dd-MM-yyyy')" type="text"/>
+    </div>
+
+    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.patient}">
+        <input class="form_field" name="specialization" [(ngModel)]="User.specialization" #spc="ngModel"
+               validateEmpty minlength="3" maxlength="40" placeholder="Specialization" />
+    
+        <ng-container *ngIf="spc.invalid && spc.dirty">
+            <mat-error *ngIf="spc?.errors.validateEmpty">Specialization cannot have white spaces.</mat-error>
+            <mat-error *ngIf="spc?.errors.minlength">Specialization must be at least 3 characters long.</mat-error>
+            <ng-container *ngIf="spc?.errors.server">
+                <mat-error *ngFor="let err of (spc?.errors.server)">{{err}}</mat-error>
+            </ng-container>
+        </ng-container>
+    </div>
+    
+    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.patient}">
+        <input class="form_field" name="yearsOfExperience" type="number"
+               [(ngModel)]="User.yearsOfExperience" #exp="ngModel"
+               min="1" max="45" placeholder="Experience" />
+    
+        <ng-container *ngIf="exp.invalid && exp.dirty">
+            <mat-error *ngIf="exp?.errors.min">Experience have to be at least 1 year.</mat-error>
+            <mat-error *ngIf="exp?.errors.max">Experience can't be more than 45 years.</mat-error>
+            <ng-container *ngIf="exp?.errors.server">
+                <mat-error *ngFor="let err of (exp?.errors.server)">{{err}}</mat-error>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <div class="form_group">
+        <button id="save_btn" type="submit" [disabled]="ModelsEqual || SaveBtnDisabled">
+            Save changes
+        </button>
+    </div>
+
+</form>

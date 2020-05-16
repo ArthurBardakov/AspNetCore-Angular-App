@@ -1,0 +1,45 @@
+#userProfile{
+    display: flex;
+    flex-direction: column;
+    max-width: 270px;
+    height: auto;
+    max-height: 345px;
+    margin-left: 2rem;
+}
+
+.form_group {
+    margin-bottom: .7rem;
+}
+
+.form_field {
+    width: -webkit-fill-available;
+    max-width: 220px;
+    min-width: 165px;
+    height: 22px;
+    border-radius: 8px;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    padding: .375rem .75rem;
+    box-shadow: inset 20px -8px 25px 0px rgba(59, 208, 98, 0.38);
+    background-color: #fff0;
+    color: #495057;
+    outline: none;
+    font-size: 0.95rem;
+}
+
+#save_btn {
+    padding: .55rem;
+    font-size: .875rem;
+    border-radius: 10px;
+    margin-bottom: .7rem;
+    background-color: rgb(40, 167, 69);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#save_btn:disabled {
+    opacity: .7;
+    cursor: default;
+}

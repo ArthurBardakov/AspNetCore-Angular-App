@@ -1,0 +1,81 @@
+<div class="modal_header">
+  <span>Patient history</span>
+</div>
+<form #PrescriptionsForm="ngForm" novalidate (ngSubmit)="SaveChangesOnClick(PrescriptionsForm)">
+  <section mat-dialog-content>
+    <ng-container *ngIf="(Prescriptions$ | async) as prescriptions; else loading">
+        <ng-container *ngIf="prescriptions.length !== 0; else noData">
+          <ng-container *ngFor="let prn of prescriptions">
+              <div class="prescription">
+                <section>
+                  <label>Date</label>
+                  <span>{{datepipe.transform(prn.visitDate, 'dd-MM-yyyy')}}</span>
+                </section>
+                <section>
+                  <label>{{prn.diagnosis}}</label>
+                  <span class="details" (click)="ToggleRelatedArea(area)">Details</span>
+                </section>
+                <textarea #area class="description invisible" name="description"
+                          disabled cols="40" rows="2" [defaultValue]=prn.description>
+                </textarea>
+              </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+    <ng-template #loading>
+      <div class="preload_text">
+          <span>Loading previous prescriptions...</span>
+      </div>
+    </ng-template>
+    <ng-template #noData>
+      <div class="preload_text">
+        <span>No prescriptions yet!</span>
+      </div>
+    </ng-template>
+
+    <section class="prescription">
+        <section>
+            <label>New prescription</label>
+        </section>
+        <input id="new_diagnosis" name="Diagnosis" type="text" placeholder="Diagnosis" 
+                ngModel #Diagnosis="ngModel" required validateEmpty minlength="4" maxlength="250">
+        <textarea class="description" name="Description" cols="30" rows="2"
+                    ngModel validateEmpty #Description="ngModel" required minlength="20" maxlength="1000">
+        </textarea>
+    </section>
+
+    <ng-container *ngIf="PrescriptionsForm.invalid && PrescriptionsForm?.errors?.server">
+        <mat-error *ngFor="let err of (PrescriptionsForm?.errors.server)">{{err}}</mat-error>
+    </ng-container>
+
+    <ng-container *ngIf="Diagnosis.invalid && Diagnosis.dirty">
+        <mat-error *ngIf="Diagnosis?.errors.required">Diagnosis is required.</mat-error>
+        <mat-error *ngIf="Diagnosis?.errors.minlength">Diagnosis must be between 4 and 250 symbols.</mat-error>
+        <mat-error *ngIf="Diagnosis?.errors.validateEmpty">Diagnosis field cannot have white spaces.</mat-error>
+        <ng-container *ngIf="Diagnosis?.errors.server">
+            <mat-error *ngFor="let err of (Diagnosis?.errors.server)">{{err}}</mat-error>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="Description.invalid && Description.dirty">
+        <mat-error *ngIf="Description?.errors.required">Description is required.</mat-error>
+        <mat-error *ngIf="Description?.errors.minlength">Description must be between 20 and 1000 symbols.</mat-error>
+        <mat-error *ngIf="Description?.errors.validateEmpty">Description field cannot have white spaces.</mat-error>
+        <ng-container *ngIf="Description?.errors.server">
+            <mat-error *ngFor="let err of (Description?.errors.server)">{{err}}</mat-error>
+        </ng-container>
+    </ng-container>
+  </section>
+
+  <div mat-dialog-actions align="end" id="dialog_actions">
+    <button mat-button type="button" [disabled]="PrescriptionsForm.disabled" (click)="Close()">
+      Close
+    </button>
+    <button mat-raised-button type="submit" color="primary"
+            [disabled]="PrescriptionsForm.invalid || PrescriptionsForm.disabled">
+      Save changes
+    </button>
+  </div>
+</form>
+<ngx-spinner name="edit_modal_spinner" bdColor="none" size="large" color="#4db951" type="ball-scale-multiple"></ngx-spinner>

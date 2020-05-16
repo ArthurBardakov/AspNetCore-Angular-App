@@ -1,0 +1,10 @@
+.vscode
+Migrations.txt
+bin
+obj
+.vs
+.editorconfig
+node_modules
+publish
+novaclinic-38220-0df8a74b6eed.json
+README_DEV.txt

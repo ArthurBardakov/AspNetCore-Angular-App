@@ -1,0 +1,35 @@
+.modal_header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 5px;
+}
+
+.modal_header > span {
+    font-size: 1.3rem;
+    color: var(--main-text-color);
+    margin-bottom: .7rem;
+}
+
+.mat-dialog-actions {
+    flex-direction: column !important;
+}
+
+.mat-dialog-actions > button {
+    min-width: 100px;
+    margin-bottom: 10px;
+}
+
+.mat-dialog-actions > .mat-button {
+    color: #927249;
+    font-size: 1rem;
+}
+
+.underline {
+    width: 100%;
+    background-color: #dee2e6;
+    height: 1px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

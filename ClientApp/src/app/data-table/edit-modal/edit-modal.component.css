@@ -1,0 +1,110 @@
+.modal_header {
+    display: flex;
+    align-items: flex-start;
+    margin: -1rem -1rem 1rem -1rem;
+    padding: 1.2rem;
+    border-bottom: 1px solid var(--edit-dialog-border-color);
+    background-color: var(--edit-dialog-section-back-color);
+}
+
+.modal_header > span {
+    font-size: 1.25rem;
+    color: inherit;
+}
+
+.prescription {
+    padding: .5rem .75rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    background-color: var(--edit-dialog-section-back-color);
+}
+
+.prescription > *,
+.preload_text {
+    margin-bottom: .5rem;
+}
+
+.preload_text {
+    padding: .5rem 1.2rem;
+    border-radius: .25rem;
+    font-size: 1rem;
+    background-color: var(--edit-dialog-section-back-color);
+}
+
+label {
+    color: #b9d7f5;
+    margin-right: 1.5rem;
+    padding: .5rem .4rem;
+}
+
+.details {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#new_diagnosis {
+    max-width: 200px;
+    width: -webkit-fill-available;
+    height: 1.6rem;
+    padding-left: .35rem;
+    border-radius: .7rem;
+    outline: 0;
+    font-size: .9rem;
+    color: inherit;
+    background-color: inherit;
+}
+
+#new_diagnosis::placeholder {
+    color: var(--main-text-color);
+}
+
+.description {
+    max-width: 250px;
+    min-width: 180px;
+    width: -webkit-fill-available;
+    min-height: 35px;
+    max-height: 210px;
+    border-radius: .7rem;
+    border-width: 2px;
+    outline: none;
+    padding-left: .35rem;
+    font-size: 1.1rem;
+    color: inherit;
+    background-color: inherit;
+    border-color: whitesmoke;
+    border-left: 2px solid #9a9a9a;
+    border-top: 2px solid #9a9a9a;
+}
+
+.mat-error {
+    padding: .2rem;
+}
+
+#dialog_actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem;
+    border-top: 1px solid var(--edit-dialog-border-color);
+}
+
+#dialog_actions > button {
+    color: var(--main-text-color);
+}
+
+#dialog_actions > button:first-child {
+    background-color: grey;
+    min-width: 60px;
+    max-width: 80px;
+    width: -webkit-fill-available;
+    margin-right: .5rem;
+}
+
+#dialog_actions > button:last-child {
+    background-color: #28a745;
+}
+
+#dialog_actions > button:last-child:disabled {
+    opacity: 0.7;
+}

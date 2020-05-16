@@ -1,0 +1,19 @@
+#reg_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#reg_link > a {
+    font-size: 1.3rem;
+    color: whitesmoke;
+    text-decoration: none;
+    transition: 0.8s;
+    cursor: pointer;
+}
+
+#reg_link > a:hover {
+    color: rgba(46, 59, 58, 0.884);
+    transition: 0.8s;
+}

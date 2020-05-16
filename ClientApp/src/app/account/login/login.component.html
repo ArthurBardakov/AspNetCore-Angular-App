@@ -1,0 +1,66 @@
+<div class="modal_header">
+  <span>Login</span>
+</div>
+<form #LogForm="ngForm" userExists="true" novalidate 
+      (ngSubmit)="accountSrc.OnLoginSubmit.emit(LogForm.value)">
+  <div mat-dialog-content>
+    <div class="googlePlus">
+      <button type="button" name="provider" value="" #GoogleBtn
+              [disabled]="LogForm.disabled"
+              [ngClass]="{'googleBtn': LogForm.enabled, 'googleBtnDisabled': LogForm.disabled}"
+              (click)="accountSrc.GoogleSignIn.emit()">
+          <i class="fab fa-google-plus fa-5x"></i>
+      </button>
+    </div>
+    <section class="form_container">
+      <ng-container *ngIf="LogForm.invalid && LogForm?.errors?.server">
+        <mat-error *ngFor="let err of (LogForm?.errors.server)">{{err}}</mat-error>
+      </ng-container>
+
+      <mat-form-field>
+        <input matInput type="email" placeholder="Email" name="email" ngModel #email="ngModel" required email>
+        <mat-label>Email</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="email.invalid && email.dirty">
+        <mat-error *ngIf="email?.errors.required">Email is required.</mat-error>
+        <mat-error *ngIf="email?.errors.email">Incorrect email input.</mat-error>
+        <mat-error *ngIf="email?.errors.userExists">{{email?.errors.userExists}}</mat-error>
+        <ng-container *ngIf="email?.errors.server">
+          <mat-error *ngFor="let err of (email?.errors.server)">{{err}}</mat-error>
+        </ng-container>
+      </ng-container>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" type="password" name="password" 
+              ngModel #password="ngModel" required minlength="6" maxlength="25">
+        <mat-label>Password</mat-label>
+      </mat-form-field>
+      <ng-container *ngIf="password.invalid && password.dirty">
+          <mat-error *ngIf="password?.errors.required">Password is required.</mat-error>
+          <mat-error *ngIf="password?.errors.minlength">Password must be between 6 and 25 characters.</mat-error>
+          <ng-container *ngIf="password?.errors.server">
+            <mat-error *ngFor="let err of (password?.errors.server)">{{err}}</mat-error>
+          </ng-container>
+      </ng-container>
+
+      <section id="reg_link">
+        <a [class.disabled]="LogForm.disabled" (click)="GoToRegister()">
+          Register as a new user
+        </a>
+        <div class="underline"></div>
+      </section>
+
+    </section>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="LogForm.disabled" (click)="Close('close')">
+      Close
+    </button>
+    <button mat-raised-button type="submit" color="primary"
+            [disabled]="LogForm.invalid || LogForm.disabled">
+      Login
+    </button>
+  </div>
+</form>
+<ngx-spinner name="account_spinner" bdColor="none" size="large" color="#4db951" type="ball-scale-multiple"></ngx-spinner>

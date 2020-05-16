@@ -1,0 +1,105 @@
+.mat-sidenav-container {
+  height: 100%;
+  background-color: inherit !important;
+}
+
+.mat-drawer-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mat-sidenav {
+  width: 160px;
+}
+
+.mat-sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-drawer.mat-drawer-push {
+  background-color: var(--toolbar-back-color) !important;
+}
+
+.mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--toolbar-back-color);
+}
+
+.mat-toolbar > .ng-star-inserted:first-child {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+mat-icon {
+  color: #575686;
+  width: auto;
+  height: auto;
+}
+
+#home_icon {
+  font-size: 3.0rem;
+}
+
+.menu_icon {
+  font-size: 2.5rem;
+}
+
+#logo {
+  display: flex;
+  align-items: center;
+  justify-items: flex-start;
+	font-size: 2.3rem;
+	cursor: pointer;
+  outline: 0;
+  margin-left: 1rem;
+}
+
+#nova {
+	margin-left: .5rem;
+}
+
+#nova, #clinic {
+  color: #efaf72;
+}
+
+#clinic {
+	color: #445479;
+}
+
+#navbar {
+  justify-self: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  margin-left: 1.1rem;
+  max-width: 536px;
+  padding-top: 0px !important;
+}
+
+.nav_link {
+  flex: 0 1 120px;
+  color: #676764;
+  font-size: 1.4rem;
+  border-radius: 20px;
+}
+
+.nav_link,
+.nav_link:hover {
+	transition: all 0.5s;
+}
+
+.nav_link:hover {
+  color: whitesmoke;
+}
+
+@media (max-width:700px) {
+  .nav_link {
+    flex: 0 1 90px;
+  }
+}

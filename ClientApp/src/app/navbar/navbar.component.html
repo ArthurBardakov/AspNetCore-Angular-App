@@ -1,0 +1,49 @@
+<mat-sidenav-container>
+  <router-outlet name="account"></router-outlet>
+
+  <mat-sidenav #drawer fixedInViewport [attr.role]="'navigation'"
+               [mode]="'push'" [opened]="false">
+    <mat-toolbar>
+      <mat-icon id="home_icon" aria-label="Side nav icon">home</mat-icon>
+    </mat-toolbar>
+    <mat-nav-list>
+      <ng-container *ngTemplateOutlet="navbarLinks; context: {classArr: 'mat-list-item'}"></ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()"
+              *ngIf="(isHandset$ | async)">
+        <ng-container *ngIf="drawer.opened; else sidenav_closed">
+          <mat-icon class="menu_icon" aria-label="Toggle sidenav">menu_open</mat-icon>
+        </ng-container>
+        <ng-template #sidenav_closed>
+          <mat-icon class="menu_icon" aria-label="Toggle sidenav">menu</mat-icon>
+        </ng-template>
+      </button>
+      <div id="logo" routerLink="/" skipLocationChange>
+        <i class="fa fa-medkit" aria-hidden="true"></i>
+        <div id="nova">Nova</div>
+        <div id="clinic">Clinic</div>
+      </div>
+      <mat-nav-list id="navbar" *ngIf="!(isHandset$ | async)">
+        <!-- mat-list-item class has to be passed manually
+          `cause passing nav_link prevents it from inserting-->
+        <ng-container *ngTemplateOutlet="navbarLinks; context: {classArr: 'mat-list-item nav_link'}"></ng-container>
+      </mat-nav-list>
+    </mat-toolbar>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #navbarLinks let-classes="classArr">
+  <a mat-list-item class={{classes}} routerLink="/" skipLocationChange>Home</a>
+  <a mat-list-item class={{classes}} (click)="NavToInfo()">My Profile</a>
+  <a mat-list-item class={{classes}} (click)="NavToAccount(AccountCmps.register)">Register</a>
+  <a mat-list-item class={{classes}} (click)="NavToAccount(AccountCmps.login)">Login</a>
+  <a mat-list-item class={{classes}} [ngClass]="{hide: !IsLoggedIn}" *ngIf="IsLoggedIn"
+      (click)="eventsSrc.LogOutClicked.emit()" routerLink="/">Logout</a>
+</ng-template>

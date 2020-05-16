@@ -1,0 +1,18 @@
+<section id="sideBar">
+  <section id="profileTabs">
+      <a routerLink="{{UserInfoLink}}" skipLocationChange routerLinkActive="profileLinkActive">
+          Profile
+      </a>
+      <a routerLink="{{UserDataLink}}" skipLocationChange routerLinkActive="profileLinkActive"
+         [routerLinkActiveOptions]="{exact: true}">
+          Find {{RelatedUserRole}}s
+      </a>
+      <a routerLink="{{UserDataLink}}" [queryParams]="{'relatedUsers': true}" skipLocationChange 
+         routerLinkActive="profileLinkActive">
+          Show my {{RelatedUserRole}}s
+      </a>
+  </section>
+  <section id="profile_content">
+      <router-outlet></router-outlet>
+  </section>
+</section>

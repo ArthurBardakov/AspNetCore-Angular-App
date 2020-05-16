@@ -1,0 +1,77 @@
+.modal_header {
+    display: flex;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal_header > span {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: .7rem;
+}
+
+.googlePlus {
+	text-align: center;
+    margin: 10px 0 10px 0;
+}
+
+.googleBtn, .googleBtnDisabled {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.googleBtn {
+	color: rgb(49, 128, 142);
+    cursor: pointer;
+}
+
+.googleBtn:hover {
+    color: whitesmoke;
+    transition: 0.7s;
+}
+
+.googleBtn:active {
+    color: rgb(84, 137, 146);
+    transition: 1s;
+}
+
+.googleBtnDisabled {
+    cursor: auto;
+    color: grey;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_container > * {
+    width: 100%;
+}
+
+mat-error {
+    margin-bottom: 10px;
+}
+
+mat-label {
+    color: var(--main-text-color);
+}
+
+.mat-dialog-actions .mat-button {
+    color: #927249;
+}
+
+.mat-raised-button:disabled {
+    background-color: rgba(63, 81, 181, 0.58) !important;
+    color: whitesmoke;
+}
+
+.underline {
+    width: 75%;
+    background-color: #ffffff;
+    height: 1px;
+    margin-top: 5px;
+}
