@@ -51,7 +51,8 @@ export class UserDataComponent extends UnsubscribeOnDestroyAdapter implements On
       super();
       this.BtnsDisabled = false;
       this.filterConfigured = false;
-      this.FilterOptions = FilterOptions;
+      this.FilterOptions = this.dataSrc.RelatedUserRole === Roles.patient ?
+        FilterOptions.filter(o => o.Key !== 'specialization') : FilterOptions;
       this.FilterOption = FilterOptions[0];
       this.foundTempUsers = [];
       this.Headers = dataSrc.RelatedUserProps.concat('action');
