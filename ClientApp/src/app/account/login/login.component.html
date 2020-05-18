@@ -25,9 +25,9 @@
         <mat-error *ngIf="email?.errors.required">Email is required.</mat-error>
         <mat-error *ngIf="email?.errors.email">Incorrect email input.</mat-error>
         <mat-error *ngIf="email?.errors.userExists">{{email?.errors.userExists}}</mat-error>
-        <ng-container *ngIf="email?.errors.server">
-          <mat-error *ngFor="let err of (email?.errors.server)">{{err}}</mat-error>
-        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="email?.errors?.server">
+        <mat-error *ngFor="let err of email.errors.server">{{err}}</mat-error>
       </ng-container>
 
       <mat-form-field>
@@ -38,9 +38,9 @@
       <ng-container *ngIf="password.invalid && password.dirty">
           <mat-error *ngIf="password?.errors.required">Password is required.</mat-error>
           <mat-error *ngIf="password?.errors.minlength">Password must be between 6 and 25 characters.</mat-error>
-          <ng-container *ngIf="password?.errors.server">
-            <mat-error *ngFor="let err of (password?.errors.server)">{{err}}</mat-error>
-          </ng-container>
+      </ng-container>
+      <ng-container *ngIf="password?.errors?.server">
+        <mat-error *ngFor="let err of password.errors.server">{{err}}</mat-error>
       </ng-container>
 
       <section id="reg_link">
