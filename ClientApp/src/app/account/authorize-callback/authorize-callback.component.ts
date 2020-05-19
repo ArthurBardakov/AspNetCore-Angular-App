@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-authorize-callback',
-  templateUrl: './authorize-callback.component.html'
+  template: ``
 })
 export class AuthorizeCallbackComponent implements OnDestroy {
 

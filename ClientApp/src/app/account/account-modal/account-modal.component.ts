@@ -14,7 +14,7 @@ import { UnsubscribeOnDestroyAdapter } from 'src/services/unsubscribe-adapter';
 
 @Component({
   selector: 'app-account-modal',
-  templateUrl: './account-modal.component.html'
+  template: ``
 })
 export class AccountModalComponent extends UnsubscribeOnDestroyAdapter {
 
