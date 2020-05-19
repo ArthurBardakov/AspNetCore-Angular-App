@@ -34,17 +34,15 @@ namespace ResourceAuthServer.Infrastructure.Seeds
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            using (var serviceScope = serviceProvider.CreateScope())
-            {
-                IServiceProvider sp = serviceScope.ServiceProvider;
-                await sp.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
-                ConfigurationDbContext configContext = sp.GetRequiredService<ConfigurationDbContext>();
-                await configContext.Database.MigrateAsync();
-                AddClients(configContext);
-                AddIdentityResources(configContext);
-                AddApiResources(configContext);
-                await configContext.SaveChangesAsync();
-            }
+            using var serviceScope = serviceProvider.CreateScope();
+            IServiceProvider sp = serviceScope.ServiceProvider;
+            await sp.GetRequiredService<PersistedGrantDbContext>().Database.MigrateAsync();
+            ConfigurationDbContext configContext = sp.GetRequiredService<ConfigurationDbContext>();
+            await configContext.Database.MigrateAsync();
+            AddClients(configContext);
+            AddIdentityResources(configContext);
+            AddApiResources(configContext);
+            await configContext.SaveChangesAsync();
         }
 
         private void AddClients(
