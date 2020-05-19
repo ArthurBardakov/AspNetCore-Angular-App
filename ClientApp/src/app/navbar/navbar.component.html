@@ -45,5 +45,5 @@
   <a mat-list-item class={{classes}} (click)="NavToAccount(AccountCmps.register)">Register</a>
   <a mat-list-item class={{classes}} (click)="NavToAccount(AccountCmps.login)">Login</a>
   <a mat-list-item class={{classes}} [ngClass]="{hide: !IsLoggedIn}" *ngIf="IsLoggedIn"
-      (click)="eventsSrc.LogOutClicked.emit()" routerLink="/">Logout</a>
+      (click)="Logout()" routerLink="/">Logout</a>
 </ng-template>

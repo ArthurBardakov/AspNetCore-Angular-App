@@ -30,11 +30,10 @@ export class NavbarComponent {
     return this.oauthSrc.hasValidAccessToken();
   }
 
-  constructor(
-    private breakpointObserver: BreakpointObserver,
-    private oauthSrc: OAuthService,
-    private router: Router,
-    public eventsSrc: EventsService) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+              private oauthSrc: OAuthService,
+              private router: Router,
+              private eventsSrc: EventsService) {}
 
   public NavToInfo(): void {
       this.router.navigate(
@@ -51,5 +50,9 @@ export class NavbarComponent {
         queryParams: { component: cmp }
       }
     );
+  }
+
+  public Logout(): void {
+    this.eventsSrc.LogOutClicked.emit();
   }
 }
