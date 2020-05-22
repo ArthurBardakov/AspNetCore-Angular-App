@@ -6,8 +6,10 @@ import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Roles } from 'src/enums/roles.enum';
-import { ErrorHandlerService } from 'src/services/errorHandler.service';
+import { ErrorHandlerService } from 'src/services/error-handler.service';
 import { InfoService } from 'src/services/info.service';
+import { ActivatedRoute } from '@angular/router';
+import { DataStateService } from 'src/services/data-state.service';
 
 @Component({
   selector: 'app-user-info',
@@ -23,20 +25,23 @@ export class UserInfoComponent implements OnDestroy {
     public Roles = Roles;
     private destroyed$ = new Subject();
 
-    constructor(
-        public infoSrc: InfoService,
-        private errorSrc: ErrorHandlerService,
-        public datePipe: DatePipe,
-        private spinner: NgxSpinnerService) {
-            this.User = Object.assign({},  this.infoSrc.User);
-            this.ModelsEqual = true;
-            this.SaveBtnDisabled = false;
+    constructor(public infoSrc: InfoService,
+                private errorSrc: ErrorHandlerService,
+                public datePipe: DatePipe,
+                public dataStateSrc: DataStateService,
+                private spinner: NgxSpinnerService,
+                private route: ActivatedRoute) {
+
+        this.route.data.pipe(take(1))
+            .subscribe(data => this.User = Object.assign({},  data.user));
+        this.ModelsEqual = true;
+        this.SaveBtnDisabled = false;
     }
 
     public OnChange(): void {
         this.ModelsEqual = this.ProfileForm.invalid ||
-            this.infoSrc.UserProps.every(p =>
-                this.propsEqual(this.infoSrc.User[p], this.User[p]));
+            this.dataStateSrc.UserProps.every(p =>
+                this.propsEqual(this.dataStateSrc.User[p], this.User[p]));
     }
 
     private propsEqual(initialVal, changedVal): boolean {
@@ -57,7 +62,7 @@ export class UserInfoComponent implements OnDestroy {
             .subscribe(
                 () => this.editSuccess(),
                 (err) => this.errorSrc.SetServerErrors(
-                    err, this.infoSrc.User, this.ProfileForm));
+                    err, this.dataStateSrc.User, this.ProfileForm));
     }
 
     private disabledForm(): void {
@@ -72,7 +77,7 @@ export class UserInfoComponent implements OnDestroy {
 
     private editSuccess(): void {
         this.ModelsEqual = true;
-        this.infoSrc.User = Object.assign({}, this.User);
+        this.dataStateSrc.User = Object.assign({}, this.User);
     }
 
     ngOnDestroy(): void {

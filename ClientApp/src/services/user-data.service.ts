@@ -1,6 +1,5 @@
 import { Injectable, Inject, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import * as jwt_decode from 'jwt-decode';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { HubConnection } from '@aspnet/signalr';
 import { Observable } from 'rxjs/internal/Observable';
@@ -19,11 +18,11 @@ import { IPrescription } from 'src/interfaces/IPrescription';
 import { PagingMetadata } from 'src/models/paging-metadata';
 import { UserModel } from 'src/models/user.model';
 import { EventsService } from './events.service';
+import { DataStateService } from './data-state.service';
 
 @Injectable()
 export class UserDataService extends UnsubscribeOnDestroyAdapter {
 
-    public UserRole: Roles;
     public RelatedUserRole: Roles;
     public Users: Array<IUser>;
     public RelatedUsers: Array<IUser>;
@@ -42,34 +41,29 @@ export class UserDataService extends UnsubscribeOnDestroyAdapter {
     }
 
     private get relatedModel(): UserModel {
-        return this.UserRole === Roles.patient ? new DoctorModel() : new PatientModel();
+        return this.dataStateSrc.UserRole === Roles.patient ? new DoctorModel() : new PatientModel();
     }
 
     constructor(protected http: HttpClient,
                 public oauthSrc: OAuthService,
                 @Inject(APP_CONFIG) protected config: IAppConfig,
+                private dataStateSrc: DataStateService,
                 private eventsSrc: EventsService) {
         super();
         this.pageSize = 20;
-
-        this.subs.sink = this.eventsSrc.TokenReceived
-            .pipe(take(1))
-            .subscribe(token => {
-                this.setRoleDefinedInfo(token);
-                this.fetchUserData();
-            });
 
         this.subs.sink = this.eventsSrc.HubConnectionEstablished
             .pipe(take(1))
             .subscribe((hubConnection) => this.registerHubHandlers(hubConnection));
     }
 
-    private setRoleDefinedInfo(token: string): void {
-        this.UserRole = jwt_decode(token).role;
-        this.RelatedUserRole = this.UserRole === Roles.patient ? Roles.doctor : Roles.patient;
+    private setRoleDefinedInfo(): void {
+        this.RelatedUserRole = this.dataStateSrc.UserRole === Roles.patient ? Roles.doctor : Roles.patient;
     }
 
-    private fetchUserData(): void {
+    public FetchUserData(): void {
+        this.setRoleDefinedInfo();
+
         forkJoin([
             this.requestUsers(this.pageNumber),
             this.getRelatedUsers()

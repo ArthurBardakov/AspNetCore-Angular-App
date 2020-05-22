@@ -50,12 +50,12 @@
         </ng-container>
     </div>
 
-    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.doctor}">
+    <div class="form_group" [ngClass]="{invisible: dataStateSrc.UserRole === Roles.doctor}">
         <input class="form_field" disabled="disabled" name="registryDate" 
                [ngModel]="datePipe.transform(User.registryDate, 'dd-MM-yyyy')" type="text"/>
     </div>
 
-    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.patient}">
+    <div class="form_group" [ngClass]="{invisible: dataStateSrc.UserRole === Roles.patient}">
         <input class="form_field" name="specialization" [(ngModel)]="User.specialization" #spc="ngModel"
                validateEmpty minlength="3" maxlength="40" placeholder="Specialization" />
     
@@ -68,7 +68,7 @@
         </ng-container>
     </div>
     
-    <div class="form_group" [ngClass]="{invisible: infoSrc.UserRole === Roles.patient}">
+    <div class="form_group" [ngClass]="{invisible: dataStateSrc.UserRole === Roles.patient}">
         <input class="form_field" name="yearsOfExperience" type="number"
                [(ngModel)]="User.yearsOfExperience" #exp="ngModel"
                min="1" max="45" placeholder="Experience" />

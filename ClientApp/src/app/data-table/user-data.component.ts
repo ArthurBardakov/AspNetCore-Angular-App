@@ -14,9 +14,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserDataService } from 'src/services/user-data.service';
 import { Roles } from 'src/enums/roles.enum';
 import { IUser } from 'src/interfaces/IUser';
-import { EditModalComponent } from './edit-modal/edit-modal.component';
+import { EditModalPage } from './edit-modal/edit-modal.page';
 import { FilterOptions, FilterOption } from 'src/models/filter-options';
 import { EventsService } from 'src/services/events.service';
+import { DataStateService } from 'src/services/data-state.service';
 
 @Component({
   selector: 'app-user-data-cmp',
@@ -40,14 +41,14 @@ export class UserDataComponent extends UnsubscribeOnDestroyAdapter implements On
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(
-    public dataSrc: UserDataService,
-    public dialog: MatDialog,
-    private route: ActivatedRoute,
-    public datepipe: DatePipe,
-    private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar,
-    private eventsSrc: EventsService) {
+  constructor(public dataSrc: UserDataService,
+              public dataStateSrc: DataStateService,
+              public dialog: MatDialog,
+              private route: ActivatedRoute,
+              public datepipe: DatePipe,
+              private spinner: NgxSpinnerService,
+              private snackBar: MatSnackBar,
+              private eventsSrc: EventsService) {
       super();
       this.BtnsDisabled = false;
       this.filterConfigured = false;
@@ -227,7 +228,7 @@ export class UserDataComponent extends UnsubscribeOnDestroyAdapter implements On
   }
 
   public OpenEditDialog(user: IUser): void {
-    this.dialog.open(EditModalComponent, {
+    this.dialog.open(EditModalPage, {
       width: '350px',
       maxWidth: '450px',
       height: '380px',

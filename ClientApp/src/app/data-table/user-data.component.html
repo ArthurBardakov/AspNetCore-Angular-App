@@ -40,7 +40,7 @@
                     </button>
         
                     <button mat-raised-button type="button" name="editUser" color="primary"
-                            [ngClass]="{invisible: !RelatedTable || dataSrc.UserRole === Roles.patient}"
+                            [ngClass]="{invisible: !RelatedTable || dataStateSrc.UserRole === Roles.patient}"
                             [disabled]="BtnsDisabled"
                             (click)="OpenEditDialog(user)">
                         Edit

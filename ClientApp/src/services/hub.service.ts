@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionState } from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
-import { take } from 'rxjs/operators';
-import * as jwt_decode from 'jwt-decode';
 import { UnsubscribeOnDestroyAdapter } from './unsubscribe-adapter';
 
 import { apiBaseUrl } from 'src/app/app.config';
 import { EventsService } from './events.service';
 import { Roles } from 'src/enums/roles.enum';
 import { UserGroups } from 'src/enums/user-groups.enum';
+import { DataStateService } from './data-state.service';
 
 @Injectable()
 export class HubService extends UnsubscribeOnDestroyAdapter {
@@ -16,14 +15,9 @@ export class HubService extends UnsubscribeOnDestroyAdapter {
     private hubConnection: HubConnection | undefined;
     private group: string;
 
-    constructor(private eventsSrc: EventsService) {
+    constructor(private eventsSrc: EventsService,
+                private dataStateSrc: DataStateService) {
         super();
-        this.subs.sink = this.eventsSrc.TokenReceived
-            .pipe(take(1))
-            .subscribe((token) => {
-                const userGroup = this.getUserGroup(jwt_decode(token).role);
-                this.ConfigHub(token, userGroup);
-            });
 
         this.subs.sink = this.eventsSrc.ServerNotResponding
             .subscribe(() => this.disconnect());
@@ -32,10 +26,10 @@ export class HubService extends UnsubscribeOnDestroyAdapter {
             .subscribe(() => this.disconnect())
     }
 
-    public ConfigHub(accessToken: string, group: string): void {
+    public ConfigHub(accessToken: string): void {
         this.initHubConnection(accessToken)
         .then(() => {
-            this.group = group;
+            this.group = this.userGroup;
             this.initHubMethods();
             this.connect();
             this.eventsSrc.HubConnectionEstablished.emit(this.hubConnection);
@@ -70,8 +64,8 @@ export class HubService extends UnsubscribeOnDestroyAdapter {
         }
     }
 
-    private getUserGroup(userRole: string): string {
-        switch (userRole) {
+    private get userGroup(): string {
+        switch (this.dataStateSrc.UserRole) {
             case Roles.patient:
                 return UserGroups.PatientsGroup;
             case Roles.doctor:
