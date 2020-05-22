@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
-import * as jwt_decode from 'jwt-decode';
 
 import { SIDENAV_ROUTES_NAMES } from './sidenav.routes.names';
 import { Roles } from 'src/enums/roles.enum';
+import { DataStateService } from 'src/services/data-state.service';
 
 @Component({
-  selector: 'app-sidenav',
-  templateUrl: './sidenav.component.html',
-  styleUrls: ['./sidenav.component.css']
+  templateUrl: './sidenav.page.html',
+  styleUrls: ['./sidenav.page.css']
 })
-export class SidenavComponent {
+export class SidenavPage {
 
   public UserInfoLink = './' + SIDENAV_ROUTES_NAMES.INFO;
   public UserDataLink = './' + SIDENAV_ROUTES_NAMES.DATA;
   public RelatedUserRole: string;
 
-  constructor() {
-    const token = localStorage.getItem('access_token');
-    this.RelatedUserRole = jwt_decode(token).role === Roles.patient ?
+  constructor(private dataStateSrc: DataStateService) {
+    this.RelatedUserRole = this.dataStateSrc.UserRole === Roles.patient ?
       Roles.doctor : Roles.patient;
   }
 }

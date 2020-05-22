@@ -5,18 +5,16 @@ import { Roles } from 'src/enums/roles.enum';
 import { AccountService } from 'src/services/account.service';
 
 @Component({
-  selector: 'app-confirmation-cmp',
-  templateUrl: './confirmation.component.html',
-  styleUrls: ['./confirmation.component.css']
+  templateUrl: './confirmation.page.html',
+  styleUrls: ['./confirmation.page.css']
 })
 
-export class ConfirmationComponent {
+export class ConfirmationPage {
 
   public Roles = Roles;
 
-  constructor(
-    private dialogRef: MatDialogRef<ConfirmationComponent>,
-    private accountSrc: AccountService) { }
+  constructor(private dialogRef: MatDialogRef<ConfirmationPage>,
+              private accountSrc: AccountService) { }
 
   public OnRoleChosen(role: Roles): void {
     this.accountSrc.OnRoleChosen.emit(role);

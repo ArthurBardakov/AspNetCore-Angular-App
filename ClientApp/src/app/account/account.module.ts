@@ -4,19 +4,19 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-import { LoginComponent } from './login/login.component';
-import { AuthorizeCallbackComponent } from './authorize-callback/authorize-callback.component';
-import { ConfirmationComponent } from './confirmation/confirmation.component';
-import { RegisterComponent } from './register/register.component';
+import { LoginPage } from './login/login.page';
+import { AuthorizeCallbackPage } from './authorize-callback/authorize-callback.page';
+import { ConfirmationPage } from './confirmation/confirmation.page';
+import { RegisterPage } from './register/register.page';
 import { EqualValidator } from '../../directives/equal.validator.directive';
 import { SharedModule } from 'src/app/shared.module';
 import { UserExistenceValidator } from 'src/directives/user-existence.validator';
-import { AccountModalComponent } from './account-modal/account-modal.component';
+import { AccountModalPage } from './account-modal/account-modal.page';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: '', component: AccountModalComponent }
+      { path: '', component: AccountModalPage }
   ]),
     MatDialogModule,
     MatFormFieldModule,
@@ -25,11 +25,11 @@ import { AccountModalComponent } from './account-modal/account-modal.component';
   ],
   declarations: [
     EqualValidator,
-    LoginComponent,
-    AccountModalComponent,
-    RegisterComponent,
-    AuthorizeCallbackComponent,
-    ConfirmationComponent,
+    LoginPage,
+    AccountModalPage,
+    RegisterPage,
+    AuthorizeCallbackPage,
+    ConfirmationPage,
     UserExistenceValidator
   ],
   providers: [

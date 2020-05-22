@@ -7,21 +7,19 @@ import { Subject } from 'rxjs/internal/Subject';
 import { AccountService } from 'src/services/account.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css', '../account-modal/account-modal.component.css']
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.css', '../account-modal/account-modal.page.css']
 })
-export class RegisterComponent implements AfterViewInit, OnDestroy {
+export class RegisterPage implements AfterViewInit, OnDestroy {
 
   @ViewChild('RegForm') public RegForm: NgForm;
   private $destroyed = new Subject();
 
-  constructor(
-    private dialogRef: MatDialogRef<RegisterComponent>,
-    public accountSrc: AccountService) {
-      this.accountSrc.CloseForm
-          .pipe(take(1), takeUntil(this.$destroyed))
-          .subscribe(() => this.Close());
+  constructor(private dialogRef: MatDialogRef<RegisterPage>,
+              public accountSrc: AccountService) {
+    this.accountSrc.CloseForm
+        .pipe(take(1), takeUntil(this.$destroyed))
+        .subscribe(() => this.Close());
   }
 
   ngAfterViewInit(): void {

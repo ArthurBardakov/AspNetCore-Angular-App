@@ -14,27 +14,25 @@ import { IPrescription } from 'src/interfaces/IPrescription';
 import { EventsService } from 'src/services/events.service';
 
 @Component({
-  selector: 'app-edit-modal',
-  templateUrl: './edit-modal.component.html',
-  styleUrls: ['./edit-modal.component.css'],
+  templateUrl: './edit-modal.page.html',
+  styleUrls: ['./edit-modal.page.css'],
   providers: [DatePipe]
 })
-export class EditModalComponent implements OnDestroy {
+export class EditModalPage implements OnDestroy {
 
   private editUser: IUser;
   public Prescriptions$: Observable<IPrescription[]>;
   private $destroyed = new Subject();
   private spinnerName = 'edit_modal_spinner';
 
-  constructor(
-    public dataSrc: UserDataService,
-    private spinner: NgxSpinnerService,
-    public datepipe: DatePipe,
-    private eventsSrc: EventsService,
-    private dialogRef: MatDialogRef<EditModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.editUser = data.user;
-      this.Prescriptions$ = this.dataSrc.FetchPrescriptions(this.editUser.userName);
+  constructor(public dataSrc: UserDataService,
+              private spinner: NgxSpinnerService,
+              public datepipe: DatePipe,
+              private eventsSrc: EventsService,
+              private dialogRef: MatDialogRef<EditModalPage>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.editUser = data.user;
+    this.Prescriptions$ = this.dataSrc.FetchPrescriptions(this.editUser.userName);
   }
 
   public SaveChangesOnClick(prescriptionForm: NgForm): void {

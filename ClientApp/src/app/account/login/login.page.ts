@@ -8,19 +8,17 @@ import { Subject } from 'rxjs/internal/Subject';
 import { AccountService } from 'src/services/account.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css', '../account-modal/account-modal.component.css']
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.css', '../account-modal/account-modal.page.css']
 })
-export class LoginComponent implements AfterViewInit, OnDestroy {
+export class LoginPage implements AfterViewInit, OnDestroy {
 
   @ViewChild('GoogleBtn') public GoogleBtn: ElementRef<HTMLElement>;
   @ViewChild('LogForm') public LogForm: NgForm;
   private $destroyed = new Subject();
 
-  constructor(
-    private dialogRef: MatDialogRef<LoginComponent>,
-    public accountSrc: AccountService) {
+  constructor(private dialogRef: MatDialogRef<LoginPage>,
+              public accountSrc: AccountService) {
       this.accountSrc.CloseForm
           .pipe(take(1), takeUntil(this.$destroyed))
           .subscribe(() => this.Close());

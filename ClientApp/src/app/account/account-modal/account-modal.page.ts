@@ -7,16 +7,15 @@ import { ComponentType } from '@angular/cdk/portal';
 
 import { AccountService } from 'src/services/account.service';
 import { AccountComponents } from 'src/enums/account-components';
-import { LoginComponent } from '../login/login.component';
-import { RegisterComponent } from '../register/register.component';
-import { ConfirmationComponent } from '../confirmation/confirmation.component';
+import { LoginPage } from '../login/login.page';
+import { RegisterPage } from '../register/register.page';
+import { ConfirmationPage } from '../confirmation/confirmation.page';
 import { UnsubscribeOnDestroyAdapter } from 'src/services/unsubscribe-adapter';
 
 @Component({
-  selector: 'app-account-modal',
   template: ``
 })
-export class AccountModalComponent extends UnsubscribeOnDestroyAdapter {
+export class AccountModalPage extends UnsubscribeOnDestroyAdapter {
 
   constructor(public dialog: MatDialog,
               private router: Router,
@@ -35,10 +34,10 @@ export class AccountModalComponent extends UnsubscribeOnDestroyAdapter {
       .subscribe(params => {
         switch (params.component) {
           case AccountComponents.login:
-            this.openDialog(LoginComponent);
+            this.openDialog(LoginPage);
             break;
           case AccountComponents.register:
-            this.openDialog(RegisterComponent);
+            this.openDialog(RegisterPage);
             break;
           default:
             break;
@@ -49,7 +48,7 @@ export class AccountModalComponent extends UnsubscribeOnDestroyAdapter {
   private openConfirmationOnTrigger(): void {
     this.subs.sink = this.accountSrc.CallConfirmOption
       .subscribe(() => {
-        this.openDialog(ConfirmationComponent, {
+        this.openDialog(ConfirmationPage, {
           width: '250px',
           hasBackdrop: false,
           panelClass: 'account-dialog-container'
@@ -80,7 +79,7 @@ export class AccountModalComponent extends UnsubscribeOnDestroyAdapter {
       this.spinner.hide('account_spinner');
     }
     if (result === 'redirect') {
-      this.openDialog(RegisterComponent);
+      this.openDialog(RegisterPage);
     } else if (result === 'close') {
       this.router.navigate(['./']);
     }
