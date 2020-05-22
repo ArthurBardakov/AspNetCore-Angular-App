@@ -20,15 +20,15 @@ import { UserDataService } from 'src/services/user-data.service';
 import { HubService } from 'src/services/hub.service';
 import { TokenInterceptor } from 'src/services/interceptor.service';
 import { APP_CONFIG, AppConfig } from './app.config';
-import { InfoService } from 'src/services/info.service';
 import { EventsService } from 'src/services/events.service';
 import { AccountService } from 'src/services/account.service';
 import { ApiService } from 'src/services/api.service';
-import { ErrorHandlerService } from 'src/services/errorHandler.service';
+import { ErrorHandlerService } from 'src/services/error-handler.service';
 import { firebaseConfig } from './account/firebase-config';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppService } from 'src/services/app.service';
+import { DataStateService } from 'src/services/data-state.service';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import { AppService } from 'src/services/app.service';
     AppService,
     EventsService,
     UserDataService,
-    InfoService,
+    DataStateService,
     ApiService,
     AccountService,
     ErrorHandlerService,
