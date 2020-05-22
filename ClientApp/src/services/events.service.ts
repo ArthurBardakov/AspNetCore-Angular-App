@@ -8,7 +8,6 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class EventsService {
 
-  public readonly TokenReceived = new EventEmitter<string>();
   public readonly DiscoveryDocLoaded = new EventEmitter<OAuthSuccessEvent>();
   public readonly HubConnectionEstablished = new EventEmitter<HubConnection>();
   public readonly ServerNotResponding = new EventEmitter<{err: any, customMsg: string}>();

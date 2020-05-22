@@ -18,7 +18,7 @@ import { Roles } from 'src/enums/roles.enum';
 import { FlowType } from 'src/enums/flow-type.enum';
 import { Controllers } from 'src/enums/controllers.enum';
 import { EventsService } from './events.service';
-import { ErrorHandlerService } from './errorHandler.service';
+import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable()
 export class AccountService extends ApiService {
@@ -155,6 +155,7 @@ export class AccountService extends ApiService {
             this.oauthSrc.logoutUrl = null;
             this.oauthSrc.logOut();
             this.oauthSrc.logoutUrl = logoutUrl;
+            this.spinner.hide();
             this.router.navigate(['./']);
         } else if (localStorage.getItem('flow_type') === FlowType.authorizationCode) {
             // this.oauthService.revokeTokenAndLogout();

@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { EmptyValidator } from '../directives/empty.validator.directive';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxSpinnerModule } from 'ngx-spinner';
+
+import { EmptyValidator } from '../directives/empty.validator.directive';
 
 @NgModule({
   imports: [
